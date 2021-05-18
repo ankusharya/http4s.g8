@@ -5,6 +5,7 @@ val LogbackVersion = "$logback_version$"
 val MunitCatsEffectVersion = "$munit_cats_effect_version$"
 
 lazy val root = (project in file("."))
+  .enablePlugins(JavaAppPackaging, DockerPlugin)
   .settings(
     organization := "$organization$",
     name := "$name;format="norm"$",
@@ -26,4 +27,8 @@ lazy val root = (project in file("."))
     addCompilerPlugin("org.typelevel" %% "kind-projector"     % "0.10.3"),
     addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.1"),
     testFrameworks += new TestFramework("munit.Framework")
-  )
+  ).settings(
+  Docker / version := "0.0.1",
+  dockerUpdateLates := true,
+  dockerExposedPorts := List(8080)
+)
